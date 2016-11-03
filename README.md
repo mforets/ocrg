@@ -20,10 +20,8 @@ To actually create new content, you can do it in any text editor and save the fi
  
 If you enjoy working online, check [stack edit](https://stackedit.io).
 
-## References:
+## References
  
 * **[BVAdd]** Convex optimization. Boyd and Vandenberghe.
  
 * **[BV]** [Additional exercises for Convex Optimization.](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook_extra_exercises.pdf) Boyd and Vandenberghe. Aug' 2016.
-
-
