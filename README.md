@@ -20,13 +20,10 @@ These are notes from the book by Boyd and Vandenberghe [BV].
 
 | Chapter   |    Main topics        | 
 |:-----:|:---------:|:----:|
-| Convex sets | convex sets in $\mathbb{R}^n$  |
+| Convex sets | convex sets |
 | Convex functions |  convex functions |
 
 
-## Commonly used notation
-
-*Polynomials*. The standard notation for polynomials with coefficients on a field $\mathbb{K}$, on a scalar (real) variable $t$, is $p(t) \in \mathbb{K}[t]$. Moreover, for polynomials with domain in $\mathbb{R}^n$, we denote $p(x) \in \mathbb{K}^n[x]$.
 
 ## How to contribute
 
