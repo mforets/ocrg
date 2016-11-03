@@ -2,7 +2,7 @@
 
 | Exercise #  |    Main topics        | Source  |
 |:-----:|:---------:|:----:|
-| [2.7](http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/exercises-boyd-vandenberghe/2-7.html) | definition of convex set  | BV[^BV] |
+| <a href="http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/exercises-boyd-vandenberghe/2-7.html" target="_blank">2.7</a> | definition of convex set  | BV[^BV] |
 
 
 ## More exercises on Convex Optimization
