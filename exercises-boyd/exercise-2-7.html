@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>main</title>
+<title>exercise-2-7</title>
 
 
 <style type="text/css">
@@ -510,78 +510,62 @@ pre.line-numbers > code {
 
 <body>
 
-<h2 id="toc_0">Solution of selected exercises</h2>
+<p>\(\newcommand{\R}{\mathbb{R}}\)
+\(\newcommand{\scalar}[2]{\langle #1,#2 \rangle}\)</p>
 
-<table>
-<thead>
-<tr>
-<th style="text-align: center">Exercise #</th>
-<th style="text-align: center">Main topics</th>
-<th style="text-align: center">Source</th>
-</tr>
-</thead>
+<h1 id="toc_0">Exercise 2.7</h1>
 
-<tbody>
-<tr>
-<td style="text-align: center"><a href="exercise-2-7.html">2.7</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[1]</td>
-</tr>
-<tr>
-<td style="text-align: center"><a href="exercise-1-1-ad.html">1.1</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[2]</td>
-</tr>
-</tbody>
-</table>
+<p><em>Voronoi description of a halfspace</em></p>
 
-<h2 id="toc_1">Chapter résumé</h2>
+<p>Let \(a\) and \(b\) be distinct points in \(\R^n\). Show that the set of all points that are closer in Euclidean norm to \(a\) than \(b\) is a halfspace. Describe it explicitly as an inequality of the form \(c^T x \leq d\). Draw a picture.</p>
 
-<table>
-<thead>
-<tr>
-<th style="text-align: center">Chapter</th>
-<th style="text-align: center">Main topics</th>
-<th style="text-align: center">Source</th>
-</tr>
-</thead>
+<p><details> 
+  <summary><strong>Solution</strong>. (MF)</summary></p>
 
-<tbody>
-<tr>
-<td style="text-align: center"><a href="convex-sets.html">Convex sets</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[1]</td>
-</tr>
-<tr>
-<td style="text-align: center"><a href="convex-functions.html">Convex functions</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[1]</td>
-</tr>
-</tbody>
-</table>
+<p>Let \(V_a = \{ x \in \R^n : ||x-a||_2 \leq ||x-b||_2 \}\). The set \(V_a\) is corresponds to all points that are closer to \(a\) than to \(b\). Expanding
+\[
+\scalar{x-a}{x-a} \leq \scalar{x-b}{x-b},
+\]
+we find after some algebra that
+\[
+\scalar{b-a}{x}\leq \dfrac{||b||^2_2 - ||a||^2_2}{2}.
+\]
+Consequently, \(V_a\) is the polyhedron \( V_a = \{ x \in \R^n : c^T x \leq d \}\), with \(c = b-a \in \R^n\), and \(d = \dfrac{||b||^2_2 - ||a||^2_2}{2}\).</p>
 
-<h2 id="toc_2">Commonly used notation</h2>
+<p>For the draw, let us consider two random points in the square \([-1,1]^2\), and build the polyhedron that we have just found.</p>
 
-<p><em>Polynomials</em>. The standard notation for polynomials with coefficients on a field \(\mathbb{K}\), on a scalar (real) variable \(t\), is \(p(t) \in \mathbb{K}[t]\). Moreover, for polynomials with domain in \(\mathbb{R}^n\), we denote \(p(x) \in \mathbb{K}^n[x]\).</p>
+<div><pre class="line-numbers"><code class="language-python">a = random_vector(RR, 2, min = -1, max = 1)
+b = random_vector(RR, 2, min = -1, max = 1)
 
-<h2 id="toc_3">How to contribute</h2>
+norm2 = lambda x : sqrt(sum(xi*xi for xi in x))
 
-<p>If you would like to contribute with an exercise please <a href="marcelo-forets.fr">send me an email</a> and I will upload it here. Otherwise you can directly do it yourself, you just need a <a href="https://github.com/">github</a> account (it is free). </p>
+d = (norm2(b)^2-norm2(a)^2)/2
+c = b - a
 
-<p>To actually create new content, you can do it in any text editor and save the file in .md (<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>) format. There exist as well several programs specially conceived to formatting in Markdown. On a personal note, my favorite (for MacOS) is the open-source project <a href="macdown.uranusjr.com/">MacDown</a>. </p>
+# plot the points a and b
+drawing = point(a, color=&#39;red&#39;, marker=&#39;x&#39;) + point(b, color=&#39;blue&#39;,marker=&#39;x&#39;)
 
-<p>If you prefer to work online, check <a href="https://stackedit.io">stack edit</a>.</p>
+# plot the region, with some (optional) formatting tweaks
+drawing += region_plot(lambda x, y: c[0]*x + c[1]*y &lt;= d ,(-1,1),(-1,1), 
+                       incol=&#39;gold&#39;, bordercol=&#39;black&#39;, borderstyle=&#39;dashed&#39;, 
+                       plot_points=500, aspect_ratio=1, alpha=0.3)
 
-<h2 id="toc_4">References:</h2>
+drawing.show()</code></pre></div>
 
-<p>[1] Convex optimization. Boyd and Vandenberghe. </p>
+<p>The plot shows that the set \(V_a\) defined above corresponds to the region in yellow, closer to the point \(a\) (in red) than \(b\) (in blue).</p>
 
-<p>[2] <a href="https://web.stanford.edu/%7Eboyd/cvxbook/bv_cvxbook_extra_exercises.pdf">Additional exercies for Convex Optimization.</a> Boyd and Vandenberghe. Aug&#39; 2016.</p>
+<p><img src="voronoi-two-points.png" width="450" height="450"/></p>
+
+<p></details></p>
 
 
 
 <script type="text/javascript">
 var _self="undefined"!=typeof window?window:"undefined"!=typeof WorkerGlobalScope&&self instanceof WorkerGlobalScope?self:{},Prism=function(){var e=/\blang(?:uage)?-(\w+)\b/i,t=0,n=_self.Prism={util:{encode:function(e){return e instanceof a?new a(e.type,n.util.encode(e.content),e.alias):"Array"===n.util.type(e)?e.map(n.util.encode):e.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/\u00a0/g," ")},type:function(e){return Object.prototype.toString.call(e).match(/\[object (\w+)\]/)[1]},objId:function(e){return e.__id||Object.defineProperty(e,"__id",{value:++t}),e.__id},clone:function(e){var t=n.util.type(e);switch(t){case"Object":var a={};for(var r in e)e.hasOwnProperty(r)&&(a[r]=n.util.clone(e[r]));return a;case"Array":return e.map&&e.map(function(e){return n.util.clone(e)})}return e}},languages:{extend:function(e,t){var a=n.util.clone(n.languages[e]);for(var r in t)a[r]=t[r];return a},insertBefore:function(e,t,a,r){r=r||n.languages;var l=r[e];if(2==arguments.length){a=arguments[1];for(var i in a)a.hasOwnProperty(i)&&(l[i]=a[i]);return l}var o={};for(var s in l)if(l.hasOwnProperty(s)){if(s==t)for(var i in a)a.hasOwnProperty(i)&&(o[i]=a[i]);o[s]=l[s]}return n.languages.DFS(n.languages,function(t,n){n===r[e]&&t!=e&&(this[t]=o)}),r[e]=o},DFS:function(e,t,a,r){r=r||{};for(var l in e)e.hasOwnProperty(l)&&(t.call(e,l,e[l],a||l),"Object"!==n.util.type(e[l])||r[n.util.objId(e[l])]?"Array"!==n.util.type(e[l])||r[n.util.objId(e[l])]||(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,l,r)):(r[n.util.objId(e[l])]=!0,n.languages.DFS(e[l],t,null,r)))}},plugins:{},highlightAll:function(e,t){var a={callback:t,selector:'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'};n.hooks.run("before-highlightall",a);for(var r,l=a.elements||document.querySelectorAll(a.selector),i=0;r=l[i++];)n.highlightElement(r,e===!0,a.callback)},highlightElement:function(t,a,r){for(var l,i,o=t;o&&!e.test(o.className);)o=o.parentNode;o&&(l=(o.className.match(e)||[,""])[1],i=n.languages[l]),t.className=t.className.replace(e,"").replace(/\s+/g," ")+" language-"+l,o=t.parentNode,/pre/i.test(o.nodeName)&&(o.className=o.className.replace(e,"").replace(/\s+/g," ")+" language-"+l);var s=t.textContent,u={element:t,language:l,grammar:i,code:s};if(!s||!i)return n.hooks.run("complete",u),void 0;if(n.hooks.run("before-highlight",u),a&&_self.Worker){var c=new Worker(n.filename);c.onmessage=function(e){u.highlightedCode=e.data,n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(u.element),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},c.postMessage(JSON.stringify({language:u.language,code:u.code,immediateClose:!0}))}else u.highlightedCode=n.highlight(u.code,u.grammar,u.language),n.hooks.run("before-insert",u),u.element.innerHTML=u.highlightedCode,r&&r.call(t),n.hooks.run("after-highlight",u),n.hooks.run("complete",u)},highlight:function(e,t,r){var l=n.tokenize(e,t);return a.stringify(n.util.encode(l),r)},tokenize:function(e,t){var a=n.Token,r=[e],l=t.rest;if(l){for(var i in l)t[i]=l[i];delete t.rest}e:for(var i in t)if(t.hasOwnProperty(i)&&t[i]){var o=t[i];o="Array"===n.util.type(o)?o:[o];for(var s=0;s<o.length;++s){var u=o[s],c=u.inside,g=!!u.lookbehind,h=!!u.greedy,f=0,d=u.alias;u=u.pattern||u;for(var p=0;p<r.length;p++){var m=r[p];if(r.length>e.length)break e;if(!(m instanceof a)){u.lastIndex=0;var y=u.exec(m),v=1;if(!y&&h&&p!=r.length-1){var b=r[p+1].matchedStr||r[p+1],k=m+b;if(p<r.length-2&&(k+=r[p+2].matchedStr||r[p+2]),u.lastIndex=0,y=u.exec(k),!y)continue;var w=y.index+(g?y[1].length:0);if(w>=m.length)continue;var _=y.index+y[0].length,P=m.length+b.length;if(v=3,P>=_){if(r[p+1].greedy)continue;v=2,k=k.slice(0,P)}m=k}if(y){g&&(f=y[1].length);var w=y.index+f,y=y[0].slice(f),_=w+y.length,S=m.slice(0,w),O=m.slice(_),j=[p,v];S&&j.push(S);var A=new a(i,c?n.tokenize(y,c):y,d,y,h);j.push(A),O&&j.push(O),Array.prototype.splice.apply(r,j)}}}}}return r},hooks:{all:{},add:function(e,t){var a=n.hooks.all;a[e]=a[e]||[],a[e].push(t)},run:function(e,t){var a=n.hooks.all[e];if(a&&a.length)for(var r,l=0;r=a[l++];)r(t)}}},a=n.Token=function(e,t,n,a,r){this.type=e,this.content=t,this.alias=n,this.matchedStr=a||null,this.greedy=!!r};if(a.stringify=function(e,t,r){if("string"==typeof e)return e;if("Array"===n.util.type(e))return e.map(function(n){return a.stringify(n,t,e)}).join("");var l={type:e.type,content:a.stringify(e.content,t,r),tag:"span",classes:["token",e.type],attributes:{},language:t,parent:r};if("comment"==l.type&&(l.attributes.spellcheck="true"),e.alias){var i="Array"===n.util.type(e.alias)?e.alias:[e.alias];Array.prototype.push.apply(l.classes,i)}n.hooks.run("wrap",l);var o="";for(var s in l.attributes)o+=(o?" ":"")+s+'="'+(l.attributes[s]||"")+'"';return"<"+l.tag+' class="'+l.classes.join(" ")+'" '+o+">"+l.content+"</"+l.tag+">"},!_self.document)return _self.addEventListener?(_self.addEventListener("message",function(e){var t=JSON.parse(e.data),a=t.language,r=t.code,l=t.immediateClose;_self.postMessage(n.highlight(r,n.languages[a],a)),l&&_self.close()},!1),_self.Prism):_self.Prism;var r=document.currentScript||[].slice.call(document.getElementsByTagName("script")).pop();return r&&(n.filename=r.src,document.addEventListener&&!r.hasAttribute("data-manual")&&document.addEventListener("DOMContentLoaded",n.highlightAll)),_self.Prism}();"undefined"!=typeof module&&module.exports&&(module.exports=Prism),"undefined"!=typeof global&&(global.Prism=Prism);
+</script>
+
+<script type="text/javascript">
+Prism.languages.python={"triple-quoted-string":{pattern:/"""[\s\S]+?"""|'''[\s\S]+?'''/,alias:"string"},comment:{pattern:/(^|[^\\])#.*/,lookbehind:!0},string:/("|')(?:\\?.)*?\1/,"function":{pattern:/((?:^|\s)def[ \t]+)[a-zA-Z_][a-zA-Z0-9_]*(?=\()/g,lookbehind:!0},"class-name":{pattern:/(\bclass\s+)[a-z0-9_]+/i,lookbehind:!0},keyword:/\b(?:as|assert|async|await|break|class|continue|def|del|elif|else|except|exec|finally|for|from|global|if|import|in|is|lambda|pass|print|raise|return|try|while|with|yield)\b/,"boolean":/\b(?:True|False)\b/,number:/\b-?(?:0[bo])?(?:(?:\d|0x[\da-f])[\da-f]*\.?\d*|\.\d+)(?:e[+-]?\d+)?j?\b/i,operator:/[-+%=]=?|!=|\*\*?=?|\/\/?=?|<[<=>]?|>[=>]?|[&|^~]|\b(?:or|and|not)\b/,punctuation:/[{}[\];(),.:]/};
 </script>
 
 <script type="text/javascript">

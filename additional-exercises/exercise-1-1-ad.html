@@ -4,7 +4,7 @@
 <head>
 
 <meta charset="utf-8">
-<title>main</title>
+<title>exercise-1-1</title>
 
 
 <style type="text/css">
@@ -510,73 +510,31 @@ pre.line-numbers > code {
 
 <body>
 
-<h2 id="toc_0">Solution of selected exercises</h2>
+<p>\(\newcommand{\R}{\mathbb{R}}\)
+\(\newcommand{\scalar}[2]{\langle #1,#2 \rangle}\)</p>
 
-<table>
-<thead>
-<tr>
-<th style="text-align: center">Exercise #</th>
-<th style="text-align: center">Main topics</th>
-<th style="text-align: center">Source</th>
-</tr>
-</thead>
+<h1 id="toc_0">Exercise 1.1</h1>
 
-<tbody>
-<tr>
-<td style="text-align: center"><a href="exercise-2-7.html">2.7</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[1]</td>
-</tr>
-<tr>
-<td style="text-align: center"><a href="exercise-1-1-ad.html">1.1</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[2]</td>
-</tr>
-</tbody>
-</table>
+<p>Let \(S = \left\{ a \in \mathbb{R}^k \text{ s.t. } ~p_a(t) \in \mathbb{R}[t]  ~\mathrm{satisfies} ~p_a(0)=1 ~\text{and}~ |p_a(t)| \leq 1 ~\text{for}~ t\in [\alpha,\beta]\right\}\), where \(p_a(t) := a_1+a_2 t + \ldots + a_k t^{k-1}\).</p>
 
-<h2 id="toc_1">Chapter résumé</h2>
+<p>Is \(S\) convex?</p>
 
-<table>
-<thead>
-<tr>
-<th style="text-align: center">Chapter</th>
-<th style="text-align: center">Main topics</th>
-<th style="text-align: center">Source</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td style="text-align: center"><a href="convex-sets.html">Convex sets</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[1]</td>
-</tr>
-<tr>
-<td style="text-align: center"><a href="convex-functions.html">Convex functions</a></td>
-<td style="text-align: center">definition of convex set</td>
-<td style="text-align: center">[1]</td>
-</tr>
-</tbody>
-</table>
-
-<h2 id="toc_2">Commonly used notation</h2>
-
-<p><em>Polynomials</em>. The standard notation for polynomials with coefficients on a field \(\mathbb{K}\), on a scalar (real) variable \(t\), is \(p(t) \in \mathbb{K}[t]\). Moreover, for polynomials with domain in \(\mathbb{R}^n\), we denote \(p(x) \in \mathbb{K}^n[x]\).</p>
-
-<h2 id="toc_3">How to contribute</h2>
-
-<p>If you would like to contribute with an exercise please <a href="marcelo-forets.fr">send me an email</a> and I will upload it here. Otherwise you can directly do it yourself, you just need a <a href="https://github.com/">github</a> account (it is free). </p>
-
-<p>To actually create new content, you can do it in any text editor and save the file in .md (<a href="https://en.wikipedia.org/wiki/Markdown">Markdown</a>) format. There exist as well several programs specially conceived to formatting in Markdown. On a personal note, my favorite (for MacOS) is the open-source project <a href="macdown.uranusjr.com/">MacDown</a>. </p>
-
-<p>If you prefer to work online, check <a href="https://stackedit.io">stack edit</a>.</p>
-
-<h2 id="toc_4">References:</h2>
-
-<p>[1] Convex optimization. Boyd and Vandenberghe. </p>
-
-<p>[2] <a href="https://web.stanford.edu/%7Eboyd/cvxbook/bv_cvxbook_extra_exercises.pdf">Additional exercies for Convex Optimization.</a> Boyd and Vandenberghe. Aug&#39; 2016.</p>
+<p><details> 
+<summary> <strong>Solution (MF).</strong> </summary> Consider two points \(a, a&#39; \in S \subset \mathbb{R}^k\), and arbitrary \(\theta \in [0,1]\). Consider the intermediate point \(a_\theta := (1-\theta)a + \theta a&#39;\). Polynomials are linear in their coefficients; explicitly,
+\[
+\begin{align}
+p_{a_\theta}(t) &amp;= \left( (1-\theta)a_1 + \theta a&#39;_1 \right)  + \left( (1-\theta)a_1 + \theta a&#39;_1 \right)t 
++ \ldots + \left( (1-\theta)a_1 + \theta a&#39;_1 \right) t^{k-1} \\
+&amp;= (a_1 + a_2 t + \ldots a_k t_{k-1})(1-\theta) + (a&#39;_1 + a&#39;_2 t + \ldots a&#39;_k t_{k-1})\theta \\
+&amp;= p_a(t) (1-\theta) + p_{a&#39;}(t)\theta.
+\end{align}
+\]
+It is easy to check that \(p_{a_\theta}(t)\) satisfies \(p_{a_\theta}(0)=1\) and 
+\[
+|p_{a_\theta}(t)| \leq |p_a(t)| (1-\theta) + |p_{a&#39;}(t)|\theta \leq 1.
+\]
+Hence, \(a_\theta \in S\) and \(S\) is convex. \(\square\)
+</details></p>
 
 
 
