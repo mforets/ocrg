@@ -1,6 +1,6 @@
 ## Learning through problem-solving
 
-[Index webpage](http://main.marcelo-forets.fr/ocrg/)
+[Link to all content in HTML format](http://main.marcelo-forets.fr/ocrg/)
 
 [Reading group webpage](https://project.inria.fr/readinggroupoc/)
 
