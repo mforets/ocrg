@@ -1,10 +1,29 @@
-## Objectives
+## Solution of selected exercises on Convex Optimization
+| Exercise #  |    Main topics        |
+|:-----:|:---------:|
+| [2.7](./exercises-boyd-vandenberghe/2-7.html) | definition of convex set  | 
 
-This is a collection of problem/solution and notes related to:
+The source of these exercises is [BV].
 
-* Convex optimization
+## More exercises on Convex Optimization
 
-* Optimal control
+
+| Exercise #  |    Main topics        | 
+|:-----:|:---------:|
+| [1.1](http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/more-exercises-convex-optimization/1-1-ad.html) |  definition of convex set |
+
+The source of these exercises is [BVAdd].
+
+## Notes on Convex Optimization
+
+These are notes from the book by Boyd and Vandenberghe [BV].
+
+| Chapter   |    Main topics        | 
+|:-----:|:---------:|:----:|
+| Convex sets | convex sets |
+| Convex functions |  convex functions |
+
+
 
 ## How to contribute
 
