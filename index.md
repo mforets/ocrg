@@ -1,3 +1,5 @@
+[Link to the webpage of the repository.](https://github.com/mforets/ocrg)
+
 ## Solution of selected exercises on Convex Optimization
 | Exercise #  |    Main topics        |
 |:-----:|:---------:|
