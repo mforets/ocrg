@@ -1,10 +1,15 @@
-## Objectives
+## Learning through problem-solving
+
+[Index webpage](http://main.marcelo-forets.fr/ocrg/)
+
+[Reading group webpage](https://project.inria.fr/readinggroupoc/)
 
 This is a collection of problem/solution and notes related to:
 
 * Convex optimization
 
 * Optimal control
+
 
 ## How to contribute
 

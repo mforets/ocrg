@@ -10,7 +10,7 @@ The source of these exercises is [BV].
 
 | Exercise #  |    Main topics        | 
 |:-----:|:---------:|
-| [1.1](http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/more-exercises-convex-optimization/1-1-ad.html) |  definition of convex set |
+| [1.1](./more-exercises-convex-optimization/1-1-ad.html) |  definition of convex set |
 
 The source of these exercises is [BVAdd].
 
