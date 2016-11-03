@@ -1,24 +1,27 @@
-## Solution of selected exercises from Boyd and Vandenberghe
+## Solution of selected exercises on Convex Optimization
+| Exercise #  |    Main topics        |
+|:-----:|:---------:|
+| [2.7](http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/exercises-boyd-vandenberghe/2-7.html) | definition of convex set  | 
 
-| Exercise #  |    Main topics        | Source  |
-|:-----:|:---------:|:----:|
-| <a href="http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/exercises-boyd-vandenberghe/2-7.html" target="_blank">2.7</a> | definition of convex set  | BV[^BV] |
-
+The source of these exercises is [BV].
 
 ## More exercises on Convex Optimization
 
-| Exercise #  |    Main topics        | Source  |
-|:-----:|:---------:|:----:|
-| [1.1](http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/exercises-boyd-vandenberghe/2-7.html) |  definition of convex set | BVAdd[^BVAdd] |
+
+| Exercise #  |    Main topics        | 
+|:-----:|:---------:|
+| [1.1](http://htmlpreview.github.io/?https://github.com/mforets/ocrg/blob/master/more-exercises-convex-optimization/1-1-ad.html) |  definition of convex set |
+
+The source of these exercises is [BVAdd].
 
 ## Notes on Convex Optimization
 
-These are notes from the book by Boyd and Vandenberghe.[^BV]
+These are notes from the book by Boyd and Vandenberghe [BV].
 
-| Chapter   |    Main topics        | Source  |
+| Chapter   |    Main topics        | 
 |:-----:|:---------:|:----:|
-| Convex sets | convex sets in $\mathbb{R}^n$  | BV[^BV] |
-| Convex functions |  convex functions | BV[^BV] |
+| Convex sets | convex sets in $\mathbb{R}^n$  |
+| Convex functions |  convex functions |
 
 
 ## Commonly used notation
@@ -31,12 +34,13 @@ If you would like to contribute with an exercise please [send me an email](marce
 
 To actually create new content, you can do it in any text editor and save the file in .md ([Markdown](https://en.wikipedia.org/wiki/Markdown)) format. There exist as well several programs specially conceived to formatting in Markdown. On a personal note, my favorite (for MacOS) is the open-source project [MacDown](macdown.uranusjr.com/). 
 
+ 
 If you enjoy working online, check [stack edit](https://stackedit.io).
 
 ## References:
-
-[^BV]: Convex optimization. Boyd and Vandenberghe. 
-
-[^BVAdd]: [Additional exercies for Convex Optimization.](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook_extra_exercises.pdf) Boyd and Vandenberghe. Aug' 2016.
+ 
+* **[BVAdd]** Convex optimization. Boyd and Vandenberghe.
+ 
+* **[BV]** [Additional exercises for Convex Optimization.](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook_extra_exercises.pdf) Boyd and Vandenberghe. Aug' 2016.
 
 
