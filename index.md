@@ -28,11 +28,9 @@ The standard notation for polynomials with coefficients on a field $\mathbb{K}$,
 These notes are mainly from the book by Boyd and Vandenberghe [BV].
 
 | Chapter   |    Main topics        | 
-|:--------:|:-----------------------------------------:|
-| [Convex sets](./notes-eng/convex-sets.html) | definition of convexity; operations that preserve convexity; basic classes of convex sets: polyhedra, cones (proper cones, dual cones); generalized inequalities |
-| [Convex functions](./notes-eng/convex-functions.html) |  convex functions |
-
-
+|:---------:|:-----------------------------------------:|
+| [Convex sets](./notes-eng/convex-sets.html), [slideshow](./notes-eng/convex-sets-sl.html) | definition of convexity; operations that preserve convexity; basic classes of convex sets: polyhedra, cones (proper cones, dual cones); generalized inequalities |
+| [Convex functions](./notes-eng/convex-functions.html), [slideshow](./notes-eng/convex-functions-sl.html) | convex functions |
 
 
 ## How to contribute
