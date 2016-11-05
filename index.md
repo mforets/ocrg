@@ -1,29 +1,37 @@
 [Link to the webpage of the repository.](https://github.com/mforets/ocrg)
 
-## Solution of selected exercises on Convex Optimization
+## Exercises and Solutions on Convex Optimization
+
+### Exercises from [BV]
+
 | Exercise #  |    Main topics        |
-|:-----:|:---------:|
-| [2.7](./exercises-boyd-vandenberghe/2-7.html) | definition of convex set  | 
+|:-----:|:------------:|
+| [2.7](./exercises-boyd-vandenberghe/2-7.html) | convex set  | 
 
 The source of these exercises is [BV].
 
-## More exercises on Convex Optimization
-
+### Additional exercises on Convex Optimization
 
 | Exercise #  |    Main topics        | 
-|:-----:|:---------:|
-| [1.1](./more-exercises-convex-optimization/1-1-ad.html) |  definition of convex set |
+|:-----:|:---------------:|
+| [1.1](./more-exercises-convex-optimization/1-1-ad.html) | convex set |
 
 The source of these exercises is [BVAdd].
 
+
+### Notation
+
+The standard notation for polynomials with coefficients on a field $\mathbb{K}$, on a scalar (real) variable $t$, is $p(t) \in \mathbb{K}[t]$. Moreover, for polynomials with domain in $\mathbb{R}^n$, we denote $p(x) \in \mathbb{K}^n[x]$.
+
 ## Notes on Convex Optimization
 
-These are notes from the book by Boyd and Vandenberghe [BV].
+These notes are mainly from the book by Boyd and Vandenberghe [BV].
 
 | Chapter   |    Main topics        | 
-|:-----:|:---------:|:----:|
-| Convex sets | convex sets |
-| Convex functions |  convex functions |
+|:--------:|:-----------------------------------------:|
+| [Convex sets](./notes-eng/convex-sets.html) | definition of convexity; operations that preserve convexity; basic classes of convex sets: polyhedra, cones (proper cones, dual cones); generalized inequalities |
+| [Convex functions](./notes-eng/convex-functions.html) |  convex functions |
+
 
 
 
@@ -38,8 +46,13 @@ If you enjoy working online, check [stack edit](https://stackedit.io).
 
 ## References:
  
-* **[BVAdd]** Convex optimization. Boyd and Vandenberghe.
+* **[BVAdd]** [Convex Optimization.](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf). Boyd and Vandenberghe.
  
 * **[BV]** [Additional exercises for Convex Optimization.](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook_extra_exercises.pdf) Boyd and Vandenberghe. Aug' 2016.
+
+
+
+
+
 
 

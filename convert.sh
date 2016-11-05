@@ -56,7 +56,8 @@ display_help() {
     echo
     echo "Support converting all md files to html."
     echo "Support generating automatically the presentation."
-    echo "Support automatically updating the table."
+    echo "Support automatically updating the table in the index html."
+    echo "How to read files that live in a folder different than this script? For instance for convertin exercises in different folders, with the dot it does not reckon as a string input."
     exit 1
 }
 
