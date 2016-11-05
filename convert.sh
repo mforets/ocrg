@@ -1,25 +1,24 @@
 #!/bin/bash
-start_export_tasks() {
+start_convert() {
 
 # trim file extension
 source_filename=$(echo $source_filename | cut -f 1 -d '.')
 
 echo "Converting $source_filename to $format format..."
 
-python convert_task_list.py $source_filename.tasks $source_filename.md
 case "$format" in
-  pdf_and_md)
-      pandoc --mathjax -s $source_filename.md -o $source_filename.pdf
-      ;;
   pdf)
       pandoc --mathjax -s $source_filename.md -o $source_filename.pdf
-      rm $source_filename.md
       ;;
   html)
-      pandoc --mathjax -s $source_filename.md -o $source_filename.html
-      rm $source_filename.md
+      pandoc --mathjax -f markdown -s $source_filename.md -o $source_filename.html -c GitHub2.css
       ;;
-  md)
+  htmlslides)
+      pandoc --mathjax -t slidy -s $source_filename.md -o $source_filename-sl.html
+      ;;
+  *)
+      echo "Error: Unknown format. Use -h for help."
+      exit 1
       ;;
 esac
 }
@@ -34,28 +33,30 @@ display_help() {
     echo
     echo "$0 [option] [source_filename]" >&2
     echo
-    echo "   -f, --format           Specify the output format. Valid options are: pdf (default), markdown (or md), and html."
+    echo "   -f, --format           Specify the output format. Valid options are: pdf and html (default)."
     #echo "   -s, --source           Specify the source filename (optional)."
     #echo "   -o, --output           Specify the output filename (optional)."
     echo "   -h, --help             Display this help."
     echo
     echo "EXAMPLES: "
     echo
-    echo "Convert tasks file to md and pdf"
-    echo "    ./exportSMCtasks.sh myTasks.tasks"
+    echo "Convert to HTML (default):"
+    echo "    ./convert.sh myExercise.md"
     echo
-    echo "Convert tasks file to pdf"
-    echo "    ./exportSMCtasks.sh -f pdf myTasks.tasks"
+    echo "We can also convert to HTML with:"
+    echo "    ./convert.sh -f html myExercise.md"
     echo
-    echo "Convert tasks file to HTML"
-    echo "    ./exportSMCtasks.sh -f html myTasks.tasks"
+    echo "Convert to pdf:"
+    echo "    ./convert.sh -f pdf myExercise.md"
     echo
-    echo "Convert tasks file to Markdown"
-    echo "    ./exportSMCtasks.sh -f md myTasks.tasks"
+    echo "Convert to presentation in HTML:"
+    echo "    ./convert.sh -f htmlslides myExercise.md"
     echo
     echo "TO-DO: "
     echo
-    echo "Support SMC chat input format."
+    echo "Support converting all md files to html."
+    echo "Support generating automatically the presentation."
+    echo "Support automatically updating the table."
     exit 1
 }
 
@@ -103,7 +104,7 @@ if [ -z ${source_filename+x} ]; then
 fi
 
 if [ -z ${format+x} ]; then
-    format="pdf_and_md";
+    format="html";
 fi
 
-start_export_tasks
+start_convert
