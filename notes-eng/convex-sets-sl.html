@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Optimization and Control Reading Group" />
+  <title>Convex sets</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Convex sets</h1>
+  <p class="author">
+Optimization and Control Reading Group
+  </p>
+  <p class="date"><span class="citation">@Grenoble</span>, France, Nov' 2016.</p>
+</div>
+<div id="the-convexity-property" class="slide section level1">
+<h1>The convexity property</h1>
+<p><span class="math inline">\(\newcommand{R}{\mathbb{R}}\)</span></p>
+<h2 id="convex-set">Convex set</h2>
+<p><strong>Def.</strong> The <em>line segment</em> that joins two points <span class="math inline">\(x_1, x_2 \in \R^n\)</span> is defined as <span class="math display">\[
+\ell(x_1, x_2) = \{ x \in \R : x = \theta x_1 + (1-\theta)x_2\text{ for some } \theta \in [0,1]\}.
+\]</span> A set <span class="math inline">\(C \in \R^n\)</span> is <em>convex</em> if the line segment between any two points in <span class="math inline">\(C\)</span> belongs to <span class="math inline">\(C\)</span>.</p>
+<p>Convex:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Convex_polygon_illustration1.svg/1729px-Convex_polygon_illustration1.svg.png" alt="Example of a convex set:" style="width: 200px;"/></p>
+<p>Not convex:</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Convex_polygon_illustration2.svg/1729px-Convex_polygon_illustration2.svg.png" alt="Example of a convex set:" style="width: 200px;"/></p>
+<p><em>Remark.</em> In most cases, the definitions also apply in an abstract finite-dimensional vector space.</p>
+<p>Let <span class="math inline">\(C \subseteq \R^n\)</span>. A <em>convex combination</em> of the points <span class="math inline">\(\{ x_i\}_{i=1}^k \subseteq C\)</span> is a point of the form <span class="math inline">\(\theta_1 x_1 + \ldots + \theta_k x_k\)</span>, for some <span class="math inline">\(\theta_i \geq 0\)</span>, <span class="math inline">\(\theta_1+\ldots+\theta_k = 1\)</span> for all <span class="math inline">\(i=1,\ldots,k\)</span>.</p>
+<p>The <em>convex hull</em> of <span class="math inline">\(C\)</span>, denoted <span class="math inline">\(\text{conv } C\)</span>, is the set of all convex combination of its points of <span class="math inline">\(C\)</span>.</p>
+<p><strong>Prop.</strong> A set is convex if and only if <span class="math inline">\(C = \text{conv } C\)</span> is satisfied. <details> <summary> <strong>Proof.</strong> </summary> (<span class="math inline">\(\impliedby\)</span>) For all <span class="math inline">\(x_1, x_2 \in \text{conv } C\)</span>, and (that is, take a convex combination of <span class="math inline">\(k=2\)</span> points) and <span class="math inline">\(\theta_1\geq 0\)</span>, <span class="math inline">\(\theta_2 = 1-\theta_1 \geq 0 \geq 0\)</span>, <span class="math inline">\(\theta_1 x_1 + (1-\theta_1) x_2 \in C\)</span>. Consequently, <span class="math inline">\(C\)</span> is convex, and <span class="math inline">\(\text{conv C} \subset C\)</span>.</p>
+<p>(<span class="math inline">\(\implies\)</span>) </details></p>
+<p><strong>Prop.</strong> For arbitrary <span class="math inline">\(C \subseteq \R^n\)</span>, the following hold:</p>
+<ol style="list-style-type: decimal">
+<li>The subset condition <span class="math inline">\(C \subset \text{conv } C\)</span> is satisfied.</li>
+<li>The convex hull <span class="math inline">\(\text{conv } C\)</span> is convex.</li>
+<li>The relationship <span class="math inline">\(\text{conv } C = \text{conv } \left( \text{conv } C \right)\)</span>.</li>
+</ol>
+<h2 id="cone">Cone</h2>
+<p><strong>Def.</strong> A set <span class="math inline">\(C \in \R^n\)</span> is a <em>cone</em> if for every <span class="math inline">\(x \in C\)</span> and <span class="math inline">\(\theta \geq 0\)</span> we have <span class="math inline">\(\theta x \in C\)</span>.</p>
+<p><strong>Claim.</strong> If a cone is convex, then <span class="math display">\[
+\theta_1 x_1 + \theta_2 x_2 \in C
+\]</span><br />
+for any <span class="math inline">\(x_1, x_2 \in C\)</span> and <span class="math inline">\(\theta_1, \theta_2 \geq 0\)</span>.</p>
+</div>
+<div id="basic-classes-of-convex-sets" class="slide section level1">
+<h1>Basic classes of convex sets</h1>
+<ul>
+<li><p>Hyperplanes and halfspaces: <span class="math inline">\(\{ x : a^T x = b \}\)</span></p></li>
+<li><p>Ellipsoids</p></li>
+<li><p>Polyhedra: intersection of a finite number of half-spaces</p></li>
+<li><p>Simplexes</p></li>
+<li><p>Convex cones</p></li>
+<li><p>Zonotope: Minkowski sum of line segments</p></li>
+</ul>
+<h2 id="polyhedra">Polyhedra</h2>
+<p>Examples: a subspace, an hyperplane, a line, a ray, a line segment, a halfspace.</p>
+<h3 id="simplexes">Simplexes</h3>
+<h2 id="cones">Cones</h2>
+<h3 id="zonotopes">Zonotopes</h3>
+</div>
+<div id="calculus-of-convex-sets" class="slide section level1">
+<h1>Calculus of convex sets</h1>
+<ul>
+<li><p>Intersection</p></li>
+<li><p>Affine functions</p></li>
+</ul>
+</div>
+<div id="generalized-inequalities" class="slide section level1">
+<h1>Generalized inequalities</h1>
+<h2 id="proper-cones">Proper cones</h2>
+<p><strong>Def.</strong> A cone <span class="math inline">\(K \subseteq \mathbb{R}^n\)</span> is a <em>proper cone</em> if it satisfies the following:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(K\)</span> is convex.</li>
+<li><span class="math inline">\(K\)</span> is closed.</li>
+<li><span class="math inline">\(K\)</span> has nonempty interior (aka <em>solid</em>).</li>
+<li><span class="math inline">\(K\)</span> contains no line (aka <em>pointed</em>).</li>
+</ol>
+<p>A <em>generalized inequality</em> is a partial ordering on <span class="math inline">\(\mathbb{R}^n\)</span> that shares many properties with the standard ordering on <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p><strong>Def.</strong> Given a proper cone <span class="math inline">\(K \subseteq \mathbb{R}^n\)</span>, the partial ordering in <span class="math inline">\(\mathbb{R}^n\)</span> given by <span class="math display">\[
+x \succ_K y \iff y-x \in K.
+\]</span></p>
+<h2 id="positive-semidefinite-cone">Positive semidefinite cone</h2>
+<p>Let <span class="math inline">\(S^n\)</span>, <span class="math inline">\(S^n_+\)</span> and <span class="math inline">\(S^n_{++}\)</span> denote, respectively, the set of symmetric, positive semidefinite, and positive definite matrices in <span class="math inline">\(\mathbb{R}^n\)</span>.</p>
+<p><strong>Prop.</strong> The set of positive definite matrices is convex.</p>
+</div>
+<div id="linear-matrix-inequalities" class="slide section level1">
+<h1>Linear matrix inequalities</h1>
+</div>
+</body>
+</html>
