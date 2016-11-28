@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <link rel="stylesheet" href="GitHub2.css" type="text/css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+</head>
+<body>
+<p><span class="math inline">\(\newcommand{\R}{\mathbb{R}}\)</span> <span class="math inline">\(\newcommand{\scalar}[2]{\langle #1,#2 \rangle}\)</span></p>
+<h1 id="exercise-2">Exercise 2</h1>
+<p><strong>Source:</strong> exercise 1.1 from [BVAdd].</p>
+<p>Let <span class="math inline">\(S = \left\{ a \in \mathbb{R}^k \text{ s.t. } ~p_a(t) \in \mathbb{R}[t] ~\mathrm{satisfies} ~p_a(0)=1 ~\text{and}~ |p_a(t)| \leq 1 ~\text{for}~ t\in [\alpha,\beta]\right\}\)</span>, where <span class="math inline">\(p_a(t) := a_1+a_2 t + \ldots + a_k t^{k-1}\)</span>.</p>
+<p>Is <span class="math inline">\(S\)</span> convex?</p>
+<p><details> <summary> <strong>Solution (MF).</strong> </summary> Consider two points <span class="math inline">\(a, a&#39; \in S \subset \mathbb{R}^k\)</span>, and arbitrary <span class="math inline">\(\theta \in [0,1]\)</span>. Consider the intermediate point <span class="math inline">\(a_\theta := (1-\theta)a + \theta a&#39;\)</span>. Polynomials are linear in their coefficients; explicitly, <span class="math display">\[
+\begin{align}
+p_{a_\theta}(t) &amp;= \left( (1-\theta)a_1 + \theta a&#39;_1 \right)  + \left( (1-\theta)a_1 + \theta a&#39;_1 \right)t 
++ \ldots + \left( (1-\theta)a_1 + \theta a&#39;_1 \right) t^{k-1} \\
+&amp;= (a_1 + a_2 t + \ldots a_k t_{k-1})(1-\theta) + (a&#39;_1 + a&#39;_2 t + \ldots a&#39;_k t_{k-1})\theta \\
+&amp;= p_a(t) (1-\theta) + p_{a&#39;}(t)\theta.
+\end{align}
+\]</span> It is easy to check that <span class="math inline">\(p_{a_\theta}(t)\)</span> satisfies <span class="math inline">\(p_{a_\theta}(0)=1\)</span> and <span class="math display">\[
+|p_{a_\theta}(t)| \leq |p_a(t)| (1-\theta) + |p_{a&#39;}(t)|\theta \leq 1.
+\]</span> Hence, <span class="math inline">\(a_\theta \in S\)</span> and <span class="math inline">\(S\)</span> is convex. <span class="math inline">\(\square\)</span> </details></p>
+</body>
+</html>

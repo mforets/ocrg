@@ -2,21 +2,12 @@
 
 ## Exercises and Solutions on Convex Optimization
 
-### Exercises from [BV]
 
-| Exercise #  |    Main topics        |
-|:-----:|:------------:|
-| [2.7](./exercises-boyd-vandenberghe/2-7.html) | convex set  | 
+| Exercise #  |    Main topics        | Source
+|:-----:|:------------:|:------------:|
+| [1](./exercises_opt/BV/2-7.html) | convex set  | [BV]| 
+| [2](./exercises_opt/BV_Add/1-1-ad.html) | convex set |[BVAdd]|
 
-The source of these exercises is [BV].
-
-### Additional exercises on Convex Optimization
-
-| Exercise #  |    Main topics        | 
-|:-----:|:---------------:|
-| [1.1](./more-exercises-convex-optimization/1-1-ad.html) | convex set |
-
-The source of these exercises is [BVAdd].
 
 
 ### Notation

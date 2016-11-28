@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="GitHub2.css" type="text/css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+</head>
+<body>
+<p><span class="math inline">\(\newcommand{\R}{\mathbb{R}}\)</span> <span class="math inline">\(\newcommand{\scalar}[2]{\langle #1,#2 \rangle}\)</span></p>
+<h1 id="exercise-1">Exercise 1</h1>
+<p><strong>Source:</strong> [BV] Exercise 2.7.</p>
+<p><em>Voronoi description of a halfspace</em></p>
+<p>Let <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> be distinct points in <span class="math inline">\(\R^n\)</span>. Show that the set of all points that are closer in Euclidean norm to <span class="math inline">\(a\)</span> than <span class="math inline">\(b\)</span> is a halfspace. Describe it explicitly as an inequality of the form <span class="math inline">\(c^T x \leq d\)</span>. Draw a picture.</p>
+<p><details> <summary><strong>Solution</strong>. (MF)</summary></p>
+<p>Let <span class="math inline">\(V_a = \{ x \in \R^n : ||x-a||_2 \leq ||x-b||_2 \}\)</span>. The set <span class="math inline">\(V_a\)</span> is corresponds to all points that are closer to <span class="math inline">\(a\)</span> than to <span class="math inline">\(b\)</span>. Expanding <span class="math display">\[
+\scalar{x-a}{x-a} \leq \scalar{x-b}{x-b},
+\]</span> we find after some algebra that <span class="math display">\[
+\scalar{b-a}{x}\leq \dfrac{||b||^2_2 - ||a||^2_2}{2}.
+\]</span> Consequently, <span class="math inline">\(V_a\)</span> is the polyhedron <span class="math inline">\(V_a = \{ x \in \R^n : c^T x \leq d \}\)</span>, with <span class="math inline">\(c = b-a \in \R^n\)</span>, and <span class="math inline">\(d = \dfrac{||b||^2_2 - ||a||^2_2}{2}\)</span>.</p>
+<p>For the draw, let us consider two random points in the square <span class="math inline">\([-1,1]^2\)</span>, and build the polyhedron that we have just found.</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">a <span class="op">=</span> random_vector(RR, <span class="dv">2</span>, <span class="bu">min</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>, <span class="bu">max</span> <span class="op">=</span> <span class="dv">1</span>)
+b <span class="op">=</span> random_vector(RR, <span class="dv">2</span>, <span class="bu">min</span> <span class="op">=</span> <span class="op">-</span><span class="dv">1</span>, <span class="bu">max</span> <span class="op">=</span> <span class="dv">1</span>)
+
+norm2 <span class="op">=</span> <span class="kw">lambda</span> x : sqrt(<span class="bu">sum</span>(xi<span class="op">*</span>xi <span class="cf">for</span> xi <span class="op">in</span> x))
+
+d <span class="op">=</span> (norm2(b)<span class="op">^</span><span class="dv">2</span><span class="op">-</span>norm2(a)<span class="op">^</span><span class="dv">2</span>)<span class="op">/</span><span class="dv">2</span>
+c <span class="op">=</span> b <span class="op">-</span> a
+
+<span class="co"># plot the points a and b</span>
+drawing <span class="op">=</span> point(a, color<span class="op">=</span><span class="st">&#39;red&#39;</span>, marker<span class="op">=</span><span class="st">&#39;x&#39;</span>) <span class="op">+</span> point(b, color<span class="op">=</span><span class="st">&#39;blue&#39;</span>,marker<span class="op">=</span><span class="st">&#39;x&#39;</span>)
+
+<span class="co"># plot the region, with some (optional) formatting tweaks</span>
+drawing <span class="op">+=</span> region_plot(<span class="kw">lambda</span> x, y: c[<span class="dv">0</span>]<span class="op">*</span>x <span class="op">+</span> c[<span class="dv">1</span>]<span class="op">*</span>y <span class="op">&lt;=</span> d ,(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>),(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>), 
+                       incol<span class="op">=</span><span class="st">&#39;gold&#39;</span>, bordercol<span class="op">=</span><span class="st">&#39;black&#39;</span>, borderstyle<span class="op">=</span><span class="st">&#39;dashed&#39;</span>, 
+                       plot_points<span class="op">=</span><span class="dv">500</span>, aspect_ratio<span class="op">=</span><span class="dv">1</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)
+
+drawing.show()</code></pre></div>
+<p>The plot shows that the set <span class="math inline">\(V_a\)</span> defined above corresponds to the region in yellow, closer to the point <span class="math inline">\(a\)</span> (in red) than <span class="math inline">\(b\)</span> (in blue).</p>
+<p><img src="voronoi-two-points.png" width="450" height="450"/></p>
+<p></details></p>
+</body>
+</html>

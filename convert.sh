@@ -27,7 +27,8 @@ esac
 # The command line help #
 #########################
 display_help() {
-    echo "exportSMCtasks, a program to convert SMC tasks files to other formats."
+    echo "convert.sh, a program to convert md into html, htmlslides, and pdf."
+    echo "Requires: pandoc"
     echo
     echo "USAGE:"
     echo
@@ -54,10 +55,7 @@ display_help() {
     echo
     echo "TO-DO: "
     echo
-    echo "Support converting all md files to html."
-    echo "Support generating automatically the presentation."
-    echo "Support automatically updating the table in the index html."
-    echo "How to read files that live in a folder different than this script? For instance for convertin exercises in different folders, with the dot it does not reckon as a string input."
+    echo "Support converting a set of files (md)."
     exit 1
 }
 
