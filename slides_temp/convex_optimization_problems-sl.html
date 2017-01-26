@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Marcelo Forets, Univ. Grenoble Alpes." />
+  <title>Convex optimization problems</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Convex optimization problems</h1>
+  <p class="author">
+<a href="http://marcelo-forets.fr/">Marcelo Forets</a>, Univ. Grenoble Alpes.
+  </p>
+  <p class="date"><a href="https://project.inria.fr/readinggroupoc/">Optimization and Control Reading Group</a>. France, Jan' 2017.</p>
+</div>
+<div class="slide section level1">
+
+<p><span class="math inline">\(\def\S{\mathbf{S}}\)</span> <span class="math inline">\(\def\A{\mathbf{A}}\)</span> <span class="math inline">\(\def\b{\mathbf{b}}\)</span> <span class="math inline">\(\def\B{\mathbf{B}}\)</span> <span class="math inline">\(\def\K{\mathbf{K}}\)</span> <span class="math inline">\(\def\G{\mathbf{G}}\)</span> <span class="math inline">\(\def\S{\mathbf{S}}\)</span> <span class="math inline">\(\def\V{\mathbf{V}}\)</span> <span class="math inline">\(\def\X{\mathbf{X}}\)</span> <span class="math inline">\(\def\Y{\mathbf{Y}}\)</span> <span class="math inline">\(\def\x{\mathbf{x}}\)</span> <span class="math inline">\(\def\y{\mathbf{y}}\)</span> <span class="math inline">\(\def\p{\mathbf{p}}\)</span> <span class="math inline">\(\def\z{\mathbf{z}}\)</span> <span class="math inline">\(\def\M{\mathbf{M}}\)</span> <span class="math inline">\(\def\Q{\mathbf{Q}}\)</span> <span class="math inline">\(\newcommand{\R}{\mathbb{R}}\)</span> <span class="math inline">\(\newcommand{\C}{\mathbb{C}}\)</span> <span class="math inline">\(\newcommand{\N}{\mathbb{N}}\)</span> <span class="math inline">\(\newcommand{\red}[1]{\textbf{{\color{red}#1}}}\)</span></p>
+</div>
+<div id="overview-of-the-chapter" class="slide section level1">
+<h1>Overview of the chapter</h1>
+<ul>
+<li>Optimization problems</li>
+<li>Convex optimization</li>
+<li>Linear optimization problems (LP)</li>
+<li>Quadratic optimization problems (QP, QCQP)</li>
+<li>Geometric programming</li>
+<li>Generalized inequality constraints (LMI)</li>
+<li>Vector optimization</li>
+<li>Exercises</li>
+</ul>
+</div>
+<div id="warm-up" class="slide section level1">
+<h1>Warm-up</h1>
+<p>Would you say this is a <em>convex optimization</em> problem?</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) = x_1^2 + x_2^2\\
+\text{subject to}
+\quad &amp;f_1(x) = x_1/(1+x_2^2) \leq 0,\\
+\quad &amp;h(x) = (x_1+x_2)^2 = 0.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p><details> <summary> Hint. </summary></p>
+<p>Let's plot <span class="math inline">\(f\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">var(<span class="st">&#39;x1 x2&#39;</span>)
+f <span class="op">=</span> x1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x2<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># show 3d plot in [-10, 10]^2</span>
+plot3d(f, (x1, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>), (x2, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>), adaptive<span class="op">=</span><span class="va">True</span>)</code></pre></div>
+<p><img src="fig/example_1_3d_plot.png" width="500" align=center></p>
+<p></details></p>
+<p><details> <summary> Discussion. </summary></p>
+<p>Recall that: <span class="math inline">\(f\)</span> is convex iff it is convex along lines, that is, for all vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(v\)</span>, the function <span class="math inline">\(g(t)=f(x+vt)\)</span> is convex, where <span class="math inline">\(t \in \{\xi : x+v\xi \in \textrm{dom }f\}.\)</span> This suggests to define a line and prove that the function is not convex along this line. The picture tells that a good candidate is at the point <span class="math inline">\(x = (1,0)^T\)</span>, and for the direction we choose <span class="math inline">\(v = (0, 1)^T\)</span>. Then, <span class="math display">\[
+g(t) = f(x+vt) = 1/(1+t^2).
+\]</span> This function is bell-shaped, and is not convex.</p>
+<p>However, the problem can be reformulated as:</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) = x_1^2 + x_2^2\\
+\text{subject to}
+\quad &amp;\bar{f}_1(x) = x_1 \leq 0,\\
+\quad &amp;\bar{h}(x) = x_1+x_2 = 0.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>Clearly, we are optimizing a convex function over a convex set.</p>
+<p>In the book, the second problem is defined as a convex optimization problem, while the first problems is defined as a (general) optimization problem.</p>
+<p></details></p>
+<h2 id="optimization-problems-in-general">Optimization problems in general</h2>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x)\\         
+\text{s.t.}
+\quad &amp;f_j(x) \geq 0, ~~ j=1,\ldots,p\\
+\quad &amp;h_k(x) = 0, ~~  k = 1,\ldots,q \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<h2 id="convex-optimization-problems">Convex optimization problems</h2>
+<h2 id="basic-properties-of-convex-optimzation-problems">Basic properties of convex optimzation problems</h2>
+<h2 id="basic-results-in-convex-optimization">Basic results in convex optimization</h2>
+</div>
+<div id="linear-programming-lp" class="slide section level1">
+<h1>Linear programming (LP)</h1>
+<h3 id="from-general-to-abstract-form">From general to abstract form</h3>
+<h3 id="robust-lp">Robust LP</h3>
+<h2 id="quadratic-programming">Quadratic programming</h2>
+<h2 id="sdp">SDP</h2>
+<h2 id="optimization-problems">Optimization problems</h2>
+<p><span class="math display">\[
+\begin{equation}
+\label{eq:lpstrength}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_j(x) \geq 0, ~~ j=1,\ldots,p\\
+\quad &amp;h_k(x) = 0, ~~  k = 1,\ldots,q \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<h2 id="convex-optimization">Convex optimization</h2>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{s.t.}
+\quad &amp;f_j(x) \geq 0, ~~ j=1,\ldots,p\\
+\quad &amp;h_k(x) = 0, ~~  k = 1,\ldots,q \,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(f_0(x)\)</span> is convex and <span class="math inline">\(f_j(x)\)</span> and <span class="math inline">\(h_k(x)\)</span> are all convex functions.</p>
+</div>
+</body>
+</html>
