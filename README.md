@@ -4,7 +4,7 @@
 
 [Reading group webpage](https://project.inria.fr/readinggroupoc/)
 
-This is a collection of problem/solution and notes related to:
+This will be a collection of notes and problem/solution files related to:
 
 * Convex optimization
 
