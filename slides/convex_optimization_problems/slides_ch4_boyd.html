@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+ "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Marcelo Forets, Univ. Grenoble Alpes." />
+  <title>Convex optimization problems</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" type="text/css" media="screen, projection, print"
+    href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" />
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML-full" type="text/javascript"></script>
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js"
+    charset="utf-8" type="text/javascript"></script>
+</head>
+<body>
+<div class="slide titlepage">
+  <h1 class="title">Convex optimization problems</h1>
+  <p class="author">
+<a href="http://marcelo-forets.fr/">Marcelo Forets</a>, Univ. Grenoble Alpes.
+  </p>
+  <p class="date"><a href="https://project.inria.fr/readinggroupoc/">Optimization and Control Reading Group</a>. France, Jan' 2017.</p>
+</div>
+<div id="overview-of-the-chapter" class="slide section level1">
+<h1>Overview of the chapter</h1>
+<p><span class="math inline">\(\def\S{\mathbf{S}}\)</span> <span class="math inline">\(\def\A{\mathbf{A}}\)</span> <span class="math inline">\(\def\b{\mathbf{b}}\)</span> <span class="math inline">\(\def\B{\mathbf{B}}\)</span> <span class="math inline">\(\def\K{\mathbf{K}}\)</span> <span class="math inline">\(\def\G{\mathbf{G}}\)</span> <span class="math inline">\(\def\S{\mathbf{S}}\)</span> <span class="math inline">\(\def\V{\mathbf{V}}\)</span> <span class="math inline">\(\def\X{\mathbf{X}}\)</span> <span class="math inline">\(\def\Y{\mathbf{Y}}\)</span> <span class="math inline">\(\def\x{\mathbf{x}}\)</span> <span class="math inline">\(\def\y{\mathbf{y}}\)</span> <span class="math inline">\(\def\p{\mathbf{p}}\)</span> <span class="math inline">\(\def\z{\mathbf{z}}\)</span> <span class="math inline">\(\def\M{\mathbf{M}}\)</span> <span class="math inline">\(\def\Q{\mathbf{Q}}\)</span> <span class="math inline">\(\newcommand{\R}{\mathbb{R}}\)</span> <span class="math inline">\(\newcommand{\C}{\mathbb{C}}\)</span> <span class="math inline">\(\newcommand{\N}{\mathbb{N}}\)</span> <span class="math inline">\(\newcommand{\red}[1]{\textbf{{\color{red}#1}}}\)</span></p>
+<ul>
+<li>Optimization problems</li>
+<li>Convex optimization</li>
+<li>Linear optimization problems (LP)</li>
+<li>Quadratic optimization problems (QP, QCQP)</li>
+<li>Geometric programming</li>
+<li>Generalized inequality constraints (LMI)</li>
+<li>Vector optimization</li>
+<li>Exercises</li>
+</ul>
+</div>
+<div id="warm-up" class="slide section level1">
+<h1>Warm-up</h1>
+<p>Would you call this a <em>convex optimization</em> problem?</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) = x_1^2 + x_2^2\\
+\text{subject to}
+\quad &amp;f_1(x) = x_1/(1+x_2^2) \leq 0,\\
+\quad &amp;h(x) = (x_1+x_2)^2 = 0.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p><details> <summary> Hint. </summary></p>
+<p>Let's plot <span class="math inline">\(f_1(x_1, x_2)\)</span>:</p>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python">var(<span class="st">&#39;x1 x2&#39;</span>)
+f <span class="op">=</span> x1<span class="op">/</span>(<span class="dv">1</span><span class="op">+</span>x2<span class="op">^</span><span class="dv">2</span>)
+
+<span class="co"># show 3d plot in [-10, 10]^2</span>
+plot3d(f, (x1, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>), (x2, <span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>), adaptive<span class="op">=</span><span class="va">True</span>)</code></pre></div>
+<p><img src="fig/example_1_3d_plot.png" width="800" align=center></p>
+<p></details></p>
+<p><details> <summary> Discussion. </summary></p>
+<p>Recall that: <span class="math inline">\(f\)</span> is convex iff it is convex along lines, that is, for all vectors <span class="math inline">\(x\)</span> and <span class="math inline">\(v\)</span>, the function <span class="math inline">\(g(t)=f(x+vt)\)</span> is convex, where <span class="math inline">\(t \in \{\xi : x+v\xi \in \textrm{dom }f\}.\)</span> This suggests to define a line and prove that the function is not convex along this line. The picture tells that a good candidate is at the point <span class="math inline">\(x = (1,0)^T\)</span>, and for the direction we choose <span class="math inline">\(v = (0, 1)^T\)</span>. Then, <span class="math display">\[
+g(t) = f(x+vt) = 1/(1+t^2).
+\]</span> This function is bell-shaped, and is not convex.</p>
+<p>However, the problem can be reformulated as:</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) = x_1^2 + x_2^2\\
+\text{subject to}
+\quad &amp;\bar{f_1}(x) = x_1 \leq 0,\\
+\quad &amp;\bar{h}(x) = x_1+x_2 = 0.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>Clearly, we are optimizing a convex function over a convex set.</p>
+<p>In Boyd's book, former system is said to be (just) a <em>standard optimization problem</em>, while the latter is said to be a <em>convex optimization problem in standard form.</em> Thus, in the terminology of the book, in a convex optimization problem is required that the feasible set is described by a set of inequalities involving convex functions, and a set of affine equality constraint functions.</p>
+<p></details></p>
+</div>
+<div id="optimization-problems" class="slide section level1">
+<h1>Optimization problems</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_i(x) \leq 0, ~~ i = 1,\ldots,m\\
+\quad &amp;h_i(x) = 0, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<ul>
+<li><em>Optimal value</em>: <span class="math inline">\(p^\ast := \inf \{f_0(x): x \text{ is feasible } \}\)</span></li>
+<li><em>Optimal set</em>: <span class="math inline">\(X_{opt} := \{ x : x \text{ is feasible and } f_0(x)=p^* \}\)</span></li>
+</ul>
+<p><details> <summary> Terminology. </summary></p>
+<ul>
+<li><span class="math inline">\(x \in \R^n\)</span> : <em>optimization variable</em></li>
+<li><span class="math inline">\(f_0 : \R^n \to \R\)</span> : <em>objective function</em></li>
+<li><span class="math inline">\(f_i : \R^n \to \R\)</span>, <span class="math inline">\(f_i(x) \leq 0\)</span> : <em>inequality constraints</em></li>
+<li><span class="math inline">\(h_i: \R^n \to \R\)</span>, <span class="math inline">\(h_i(x) = 0\)</span> : <em>equality constraints</em></li>
+<li><span class="math inline">\(\mathcal{D} := \bigcap_{i=0}^m \text{dom }f_i \cap \bigcap_{i=0}^p \text{dom }h_i\)</span> is the <em>domain of the optimization problem</em>.</li>
+<li><span class="math inline">\(x \in \mathcal{D}\)</span> is <em>feasible</em> if it satisfies all the constraints. </details></li>
+</ul>
+<p><details> <summary> Toy examples. </summary></p>
+<p>Here <span class="math inline">\(\text{dom } f = \mathbb{R}_{&gt;0}\)</span> and the problems are unconstrained:</p>
+<ul>
+<li><span class="math inline">\(f_0(x) = 1/x\)</span>, <span class="math inline">\(p^*=0\)</span> (but the optimal value is not achieved)</li>
+<li><span class="math inline">\(f_0(x) = -\log x\)</span>, <span class="math inline">\(p^* = -\infty\)</span> (problem is unbounded below)</li>
+<li><span class="math inline">\(f_0(x) = x \log x\)</span>, <span class="math inline">\(p^*=-1/e\)</span> (<span class="math inline">\(\exists\)</span> unique optimal point <span class="math inline">\(x^*=1/e\)</span>)</li>
+</ul>
+<p></details></p>
+</div>
+<div id="expressing-problems-in-standard-form" class="slide section level1">
+<h1>Expressing problems in standard form</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_i(x) \leq 0, ~~ i = 1,\ldots,m\\
+\quad &amp;h_i(x) = 0, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<ul>
+<li>may require <strong>rearranging</strong> the rhs (e.g. to handle box constraints, <span class="math inline">\(l_i \leq x_i \leq h_i\)</span>).</li>
+<li><strong>maximization</strong> is handled by minimizing <span class="math inline">\(-f_0(x)\)</span> subject to the same constraints.</li>
+</ul>
+</div>
+<div id="equivalent-problems-elementary-methods" class="slide section level1">
+<h1>Equivalent problems: elementary methods</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_i(x) \leq 0, ~~ i = 1,\ldots,m\\
+\quad &amp;h_i(x) = 0, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<ul>
+<li><strong>slack variables</strong>: to replace an inequality constraint by an equality constraint and a nonnegativity constraint (since <span class="math inline">\(f_i(x)\leq 0\)</span> iff <span class="math inline">\(\exists s_i\geq 0\)</span> satisfying <span class="math inline">\(f_i(x)+s_i = 0\)</span>).</li>
+<li><strong>change of variables</strong>: any <span class="math inline">\(\phi : \R^n \to \R^n\)</span>, injective and <span class="math inline">\(\text{Im } \phi \supseteq \mathcal{D}\)</span> can be used as in <span class="math inline">\(\tilde{f_i}(z) = f_i(x)\)</span>, with the change of variable <span class="math inline">\(x = \phi(z)\)</span>.</li>
+<li><strong>scaling</strong>: as in <span class="math inline">\(\tilde{f_i}(x) = \alpha_i f_i(x)\)</span>, give problems that are equivalent in the sense that we can recover the solution of one form that of the other and vice-versa.</li>
+<li><strong>generalized scaling</strong>: given <span class="math inline">\(\psi_0\)</span> monotonically increasing, <span class="math inline">\(\psi_{1\leq i \leq m} : \psi_i(u)\leq 0\)</span> iff <span class="math inline">\(u\leq 0,\)</span> and <span class="math inline">\(\varphi_{1\leq i \leq p}: \varphi_i(u)=0\)</span> iff <span class="math inline">\(u=0,\)</span> then define: <span class="math inline">\(\tilde{f_i}(x) = \psi_i(f_i(x))\)</span> and <span class="math inline">\(\tilde{h}_i(x) = \varphi_i(h_i(x))\)</span>.</li>
+</ul>
+<p><details> <summary> Examples. </summary></p>
+<ul>
+<li><em>Transforming to a differentiable problem:</em> <span class="math inline">\(\min \Vert Ax-b \Vert_2\)</span> vs. <span class="math inline">\(\min (Ax-b)^T(Ax-b)\)</span>.</li>
+<li><em>Eliminating equality constraints:</em> if we know <span class="math inline">\(\phi : \R^k \to \R^n\)</span> such that <span class="math inline">\(h_i(x)=0\)</span> iff for some <span class="math inline">\(z\in \text{dom } \phi\)</span>, we have <span class="math inline">\(x = \phi(z)\)</span>, then we can transform via <span class="math inline">\(\tilde{f_i}(z) = f_i(\phi(z))\)</span>, eliminating the equality constraints. A particular instance is the case <span class="math inline">\(h_i: a_i^T x = b_i\)</span>.</li>
+<li><em>Optimizing over some variables:</em> consists in simplifying the problem by using the principle <span class="math inline">\(\inf_{x, y}f(x, y) = \inf_x \tilde{f}(x)\)</span>, where <span class="math inline">\(\tilde{f}(x) = \inf_y f(x, y)\)</span>.</li>
+</ul>
+<p></details></p>
+</div>
+<div id="epigraph-problem-form" class="slide section level1">
+<h1>Epigraph problem form</h1>
+<ul>
+<li>Recall that: <span class="math inline">\(\text{epi} (f) = \{(x, t) : x \in \text{dom } f \text{ and } f(x) \leq t \}\)</span>.</li>
+</ul>
+<div class="incremental">
+<ul>
+<li>The standard problem can be reformulated in the variable <span class="math inline">\(y = (x,t) \in \R^{n+1}\)</span> as:</li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; t \\         
+\text{subject to}
+\quad &amp;f_0(x) - t \leq 0, \\
+\quad &amp;f_i(x) \leq 0, ~~ i=1,\ldots,m\\
+\quad &amp;h_i(x) = 0, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<ul>
+<li>It can be seen as an optimization problem in the &quot;graph space&quot; <span class="math inline">\((x, t)\)</span>:</li>
+</ul>
+<p><img src="fig/epigraph_form.png" width="300" align=center></p>
+<p><details> <summary> Example (polynomial optimization). </summary></p>
+<p>Consider a univariate polynomial <span class="math inline">\(p : \R \to \R\)</span>, <span class="math inline">\(p \in \R_{2k}[t]\)</span>, and let <span class="math inline">\(x = \text{vec } p \in \R^{2k+1}\)</span>. The polynomial optimization problem:</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{maximize}\quad &amp; \inf_t p(t) \\           
+\text{subject to}
+\quad &amp;l_i \leq p(t_i) \leq u_i, ~~  i = 1,\ldots,m \,.
+\end{aligned}
+\end{equation}
+\]</span> can be reformulated via epigraph form as: <span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{maximize}\quad &amp; \gamma \\            
+\text{subject to}
+\quad &amp;p(t) - \gamma \geq 0, ~~ t \in \R \\
+\quad &amp;l_i \leq p(t_i) \leq u_i, ~~  i = 1,\ldots,m \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>The interest in this reformulation is that we recover a <em>nonnegative polynomial constraint</em> <span class="math inline">\(p(t) - \gamma \geq 0.\)</span> The characterization of nonnegative polynomials via linear-matrix inequalities can be applied in this setup (see Exercise 3).</p>
+<p></details></p>
+</div>
+</div>
+<div id="convex-optimization-problems" class="slide section level1">
+<h1>Convex optimization problems</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_i(x) \leq 0, ~~ i = 1,\ldots,m\\
+\quad &amp;a^T_i x = b_i, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(f_0,\ldots,f_m\)</span> are convex functions.</p>
+<p>Two key remarks:</p>
+<ol style="list-style-type: decimal">
+<li>the feasible set of a convex optimization problem is convex.</li>
+<li>any locally optimal point is also globally optimal.</li>
+</ol>
+<p><details> <summary> Proof of 1.</summary></p>
+<p>Recall that intersection is an operation that preserves convexity. The feasible set is the intersection of:</p>
+<ul>
+<li>the domain <span class="math inline">\(\mathcal{D} = \bigcap_{i=0}^m \text{dom } f\)</span>, a convex set;</li>
+<li><span class="math inline">\(p\)</span> hyperplanes;</li>
+<li><span class="math inline">\(0\)</span>-sublevel sets of the <span class="math inline">\(m\)</span> functions <span class="math inline">\(f_i(x)\)</span> (which are convex, as a consequence of <span class="math inline">\(f_i\)</span> being convex).</li>
+</ul>
+<p>Hence, the feasible set is convex.</p>
+<p></details></p>
+<p><details> <summary> Proof of 2. </summary></p>
+<p>Suppose that <span class="math inline">\(x \in \mathcal{D}\)</span> is locally optimal, that is, <span class="math inline">\(x\)</span> is feasible and <span class="math display">\[
+f_0(x) = \inf \{ f_0(z) : z \text{ is feasible and } \Vert z-x \Vert_2 \leq R\}
+\]</span> for some <span class="math inline">\(R &gt; 0\)</span>. Suppose that <span class="math inline">\(x\)</span> is not globally optimal: assume there is a feasible <span class="math inline">\(y\)</span>, such that <span class="math inline">\(f_0(y) &lt; f_0(x)\)</span>; by hypothesis we have <span class="math inline">\(\Vert y-x \Vert_2 &gt; R\)</span>. By convexity of the feasible set, for any <span class="math inline">\(\theta \in [0, 1]\)</span>, <span class="math display">\[
+z = (1-\theta)x + \theta y
+\]</span> is feasible. Pick <span class="math inline">\(\theta = \frac{R}{2\Vert y-x \Vert_2} &lt; 1\)</span>, then we have <span class="math display">\[
+\Vert z-x \Vert_2 = \theta \Vert y-x \Vert_2=\frac{R}{2} &lt; R,
+\]</span> hence <span class="math inline">\(f_0(z)\geq f(x)\)</span> by hypothesis.</p>
+<p>On the other side, by convexity of <span class="math inline">\(f_0\)</span>, we have <span class="math display">\[
+f_0(z) \leq (1-\theta) f_0(x) + \theta f_0(y) &lt; f_0(x),
+\]</span> a contradiction.</p>
+<p></details></p>
+</div>
+<div id="optimality-criterion-using-1st-order-condition" class="slide section level1">
+<h1>Optimality criterion using 1st order condition</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_i(x) \leq 0, ~~ i = 1,\ldots,m\\
+\quad &amp;a^T_i x = b_i, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p><strong>Proposition.</strong> If <span class="math inline">\(f_0\)</span> is differentiable, then, <span class="math inline">\(x\)</span> is optimal iff <span class="math inline">\(x\)</span> is feasible and <span class="math inline">\(\nabla f_0(x)^T(y-x)\geq 0\)</span> for all feasible <span class="math inline">\(y.\)</span></p>
+<p><img src="fig/geometric_optimality_condition.png" width="300" align=center></p>
+<p><strong>Corollary.</strong> If the problem is unconstrained, then the optimality condition simplifies to <span class="math inline">\(\nabla f_0(x) = 0\)</span>.</p>
+<p><details> <summary> Proof of the optimality condition. </summary></p>
+<p>Recall the 1st order condition: suppose <span class="math inline">\(f\)</span> is differentiable (that is, <span class="math inline">\(\nabla f(x)\)</span> exists for all <span class="math inline">\(x\)</span> in its domain). Then <span class="math inline">\(f_0\)</span> is convex iff <span class="math inline">\(\text{dom } f\)</span> is convex and for all <span class="math inline">\(x, y \in \text{dom } f\)</span>, it holds <span class="math display">\[
+f(y) \geq f(x) + \nabla f(x)^T(y-x).
+\]</span></p>
+<p>Let <span class="math inline">\(X\)</span> denote the feasible set.</p>
+<ul>
+<li><p>(<span class="math inline">\(\impliedby\)</span>) Suppose that <span class="math inline">\(x \in X\)</span> and that <span class="math inline">\(\nabla f_0(x)^T (y-x) \geq 0\)</span> for all <span class="math inline">\(y\in X\)</span>. From the first order condition, we get <span class="math inline">\(f(y)-f(x) \geq 0\)</span> for all <span class="math inline">\(y\in X\)</span>, hence <span class="math inline">\(x\)</span> is an optimal point.</p></li>
+<li><p>(<span class="math inline">\(\implies\)</span>) We proceed by contradiction: assume <span class="math inline">\(x \in X\)</span> is optimal, and there exists <span class="math inline">\(y \in X\)</span> such that <span class="math inline">\(\nabla f_0(x)^T (y-x) &lt; 0\)</span>. For each <span class="math inline">\(t \in [0, 1]\)</span>, the point <span class="math inline">\(z(t) = ty + (1-t)x\)</span> is feasible, by convexity of <span class="math inline">\(X\)</span>. Then, <span class="math display">\[
+\left. \frac{d}{dt}f_0(z(t)) \right\rvert_{t=0} = \nabla f_0(x)(y-x) &lt; 0
+\]</span> by hypothesis, but this implies that for small positive <span class="math inline">\(t\)</span>, <span class="math inline">\(f_0(z(t))&lt;f_0(x)\)</span>, a contradiction.</p></li>
+</ul>
+<p></details></p>
+<p><details> <summary> Proof of the corollary. </summary></p>
+<p>If <span class="math inline">\(x \in \text{dom } f\)</span> is optimal, then for all feasible <span class="math inline">\(y \in \text{dom } f\)</span>, it holds <span class="math display">\[
+f(y) \geq f(x) + \nabla f(x)^T(y-x).
+\]</span> We can take <span class="math inline">\(y = x-t\nabla f_0(x)\)</span> with small positive <span class="math inline">\(t\)</span>, which is in the domain of <span class="math inline">\(f\)</span> because <span class="math inline">\(\text{dom f}\)</span> is open, and is feasible for sufficiently small <span class="math inline">\(t\)</span>. Hence, <span class="math display">\[
+\nabla f(x)^T(y-x) = -t \Vert \nabla f_0(x)\Vert_2^2 \geq 0,
+\]</span> hence <span class="math inline">\(\nabla f_0(x)\)</span> must vanish.</p>
+<p></details></p>
+</div>
+<div id="optimality-criterion-using-lagrange-multipliers" class="slide section level1">
+<h1>Optimality criterion using Lagrange multipliers</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;Ax = b, ~~  A \in\R^{p\times n}, b \in \R^p \,.
+\end{aligned}
+\end{equation}
+\]</span> Assume <span class="math inline">\(f_0\)</span> is differentiable, and <span class="math inline">\(x\)</span> is optimal.</p>
+<ul>
+<li><p>for feasible <span class="math inline">\(x, y\)</span>, we must have <span class="math inline">\(y-x = z \in \ker A\)</span>.</p></li>
+<li><p>from <span class="math inline">\(\nabla f_0(x)^T(y-x)\geq 0\)</span>, we have that <span class="math inline">\(\nabla f_0(x)\perp \ker A\)</span>.</p></li>
+<li><p>recall that <span class="math inline">\((\ker A)^\perp = \text{ran } A^T\)</span> and let <span class="math inline">\(\dim (\ker A) = k\)</span>.</p></li>
+<li><p>we deduce that there exists <span class="math inline">\(\nu \in \R^k\)</span> such that <span class="math display">\[
+\nabla f_0(x) + A^T v = 0
+\]</span> for all feasible <span class="math inline">\(x\)</span>.</p></li>
+</ul>
+</div>
+<div id="linear-optimization-problems-lp" class="slide section level1">
+<h1>Linear optimization problems (LP)</h1>
+<div class="incremental">
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; c^T x + d \\         
+\text{subject to}
+\quad &amp;Gx \preceq  h \\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(G \in \R^{m\times n}\)</span>, and <span class="math inline">\(A \in \R^{p\times n}\)</span>.</p>
+<ul>
+<li><p>the objective and all constraint functions are <em>affine.</em></p></li>
+<li><p>geometrically: minimize an affine function over a <em>polyhedron</em> <span class="math inline">\(\mathcal{P}\)</span>.</p></li>
+</ul>
+<p><img src="fig/geometric_interpretation_lp.png" width="350" align=center></p>
+<p>Two equivalent formulations:</p>
+<ul>
+<li><p><em>Standard form LP</em>: <span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; c^T x  \\            
+\text{subject to}
+\quad &amp;Ax = b\\
+\quad &amp;x \succeq 0 \\
+\end{aligned}
+\end{equation}
+\]</span></p></li>
+<li><p><em>Inequality form LP</em>: <span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; c^T x  \\            
+\text{subject to}
+\quad &amp;Ax \preceq b.
+\end{aligned}
+\end{equation}
+\]</span></p></li>
+</ul>
+</div>
+</div>
+<div id="quadratic-optimization-problems-qp-qcqp" class="slide section level1">
+<h1>Quadratic optimization problems (QP, QCQP)</h1>
+<div class="incremental">
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; \frac{1}{2} x^T P x + q^Tx + r\\         
+\text{subject to}
+\quad &amp;Gx \preceq  h \\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(P \in S^n_+\)</span>, <span class="math inline">\(G \in \R^{m\times n}\)</span>, and <span class="math inline">\(A \in \R^{p\times n}\)</span>.</p>
+<ul>
+<li><p>the objective is (convex) <em>quadratic</em>, and all constraints are <em>affine.</em></p></li>
+<li><p>geometrically: minimize a convex quadratic function over a <em>polyhedron</em> <span class="math inline">\(\mathcal{P}\)</span>.</p></li>
+</ul>
+<p><img src="fig/geometric_interpretation_qp.png" width="350" align=center></p>
+<p><strong>Two related problems:</strong></p>
+<ul>
+<li><em>Quadratically constrained quadratic program</em>: (QCQP)</li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; \frac{1}{2} x^T P_0 x + q_0^Tx + r_0\\           
+\text{subject to}
+\quad &amp;\frac{1}{2} x^T P_i x + q_i^Tx + r_i\leq 0,~i=1,\ldots,m\\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(P_i \in S^n_+\)</span>, <span class="math inline">\(G \in \R^{m\times n}\)</span>, and <span class="math inline">\(A \in \R^{p\times n}\)</span>. When <span class="math inline">\(P_i\)</span> are positive definite, the feasible region is the <em>intersection of ellipsoids</em>.</p>
+<ul>
+<li><em>Second-order cone programming</em>: (SOCP)</li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f^T x\\          
+\text{subject to}
+\quad &amp;\Vert A_i x + b_i\Vert_2 \leq c_i^T x + d_i,~i=1,\ldots,m\\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(A_i \in R^{n_i \times n}\)</span>, <span class="math inline">\(F \in \R^{p\times n}\)</span>, and <span class="math inline">\(x \in \R^n\)</span>.</p>
+</div>
+</div>
+<div id="geometric-programming" class="slide section level1">
+<h1>Geometric programming</h1>
+<div class="incremental">
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x)\\         
+\text{subject to}
+\quad &amp;f_i(x)\leq 1,\qquad i=1,\ldots,m \\
+\quad &amp;h_i(x) = 1,\qquad i=1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(f_i\)</span> are <em>posynomials</em> and <span class="math inline">\(h_i\)</span> are <em>monomials</em>. The domain is <span class="math inline">\(\mathcal{D}=\R^n_{&gt;0}\)</span>.</p>
+<p><details> <summary> Terminology. </summary></p>
+<ul>
+<li><p>A <em>monomial</em> is a function <span class="math inline">\(f : \R^n \to \R\)</span>, <span class="math inline">\(\text{dom } f = \R^n_{&gt;0}\)</span>, defined as <span class="math display">\[
+f(x) = cx_1^{a_1}\cdots x_n^{a_n},
+\]</span> <span class="math inline">\(c&gt;0\)</span>, <span class="math inline">\(a_i \in \R\)</span>. (note that it differs from the usual notion of monomial).</p></li>
+<li><p>A <em>posynomial</em> function with <span class="math inline">\(K\)</span> terms is a sum of monomials, namely <span class="math display">\[
+f(x) = \sum_{k=1}^K c_k x_1^{a_{1k}}\cdots x_n^{a_{nk}}, \qquad c_k &gt; 0.
+\]</span></p></li>
+</ul>
+<p></details></p>
+<ul>
+<li><p>Posynomials are closed under addition, multiplication, and nonnegative scaling.</p></li>
+<li><p>Geometric programs are not convex in their natural form, but can be <strong>transformed</strong> into convex optimization problems by suitable change of variables and a transformation of the objective and constraint functions.</p></li>
+</ul>
+</div>
+</div>
+<div id="generalized-inequality-constraints" class="slide section level1">
+<h1>Generalized inequality constraints</h1>
+<div class="incremental">
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x)\\         
+\text{subject to}
+\quad &amp;f_i(x) \preceq_{K_i} 0,\qquad i=1,\ldots,m \\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(f_0 : \R^n \to \R\)</span>, <span class="math inline">\(K_i \subseteq \R^{k_i}\)</span> are <em>proper cones</em>, and <span class="math inline">\(f_i : \R^n\to \R^{k_i}\)</span> are <span class="math inline">\(K_i\)</span>-convex.</p>
+<ul>
+<li><p>Our general standard convex optimization problem is a special case with <span class="math inline">\(K_i = \R_+\)</span>.</p></li>
+<li><p>The feasible set, any sublevel set, and optimal set <strong>are convex</strong>.</p></li>
+<li><p>Any locally optimal point <strong>is globally optimal</strong>.</p></li>
+<li><p>The first order <strong>optimality condition holds.</strong></p></li>
+</ul>
+<p><details> <summary> Two important instances: CP and SDP </summary></p>
+<ul>
+<li><em>Cone programs:</em></li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; c^T x\\          
+\text{subject to}
+\quad &amp;Fx + g \preceq_{K} 0 \\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> They generalize LP in the sense that componentwise inequality is replaced with a generalized linear inequality.</p>
+<ul>
+<li><em>Semidefinite programming:</em></li>
+</ul>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; c^T x\\          
+\text{subject to}
+\quad &amp;x_1 F_1 + \cdots + x_n F_n + G \preceq 0 \\
+\quad &amp;Ax = b\,.
+\end{aligned}
+\end{equation}
+\]</span> where <span class="math inline">\(K = S_+^k\)</span>, <span class="math inline">\(G, F_i \in S^k\)</span>, and <span class="math inline">\(A \in \R^{p\times n}\)</span>. The inequality here is a <strong>linear matrix inequality (LMI).</strong></p>
+<p></details></p>
+</div>
+</div>
+<div id="vector-optimization" class="slide section level1">
+<h1>Vector optimization</h1>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{minimize}\quad &amp; f_0(x) \\            
+\text{subject to}
+\quad &amp;f_i(x) \leq 0, ~~ i = 1,\ldots,m\\
+\quad &amp;h_i(x) = 0, ~~  i = 1,\ldots,p \,.
+\end{aligned}
+\end{equation}
+\]</span> where the minimization is taken with respect to a proper cone <span class="math inline">\(K\subseteq \R^q\)</span>, <span class="math inline">\(x \in \R^n\)</span> is the optimization variable, <span class="math inline">\(f_0 : \R^n \to \R^q\)</span> is a <strong>vector</strong> objective function, <span class="math inline">\(f_i : \R^n \to \R\)</span> are the inequality constraint functions, and <span class="math inline">\(h_i:\R^n \to \R\)</span> are equality constraint functions.</p>
+<ul>
+<li>The problem specification includes a proper cone <span class="math inline">\(K\)</span>, which is used to compare objective values.</li>
+<li>For feasible <span class="math inline">\(x, y\)</span>, we interpret <span class="math inline">\(f_0(x) \preceq_{K} f_0(y)\)</span> as meaning that <span class="math inline">\(x\)</span> is better than or equal in value to <span class="math inline">\(y\)</span>, as judged by the objective function <span class="math inline">\(f_0\)</span> with respect to <span class="math inline">\(K\)</span>. Note that in general, <span class="math inline">\(x, y\)</span> need not be comparable.</li>
+</ul>
+</div>
+<div id="exercises" class="slide section level1">
+<h1>Exercises</h1>
+<ol style="list-style-type: decimal">
+<li><em>Minimum fuel optimal control.</em> Exercise 4.16. (LP)</li>
+<li><em>Robust linear programming as a SOCP.</em> Section 4.4.2. (QP)</li>
+<li><em>Optimization over polynomials.</em> Exercise 4.44. (SDP)</li>
+</ol>
+<div class="incremental">
+<h2 id="proposal">Proposal</h2>
+<ul>
+<li>Make 3 groups. After some time, we share with all the group.</li>
+<li>Choose a programming language: Julia, Python, Matlab, Sage, ...</li>
+</ul>
+<p><details> <summary> If you choose Julia... </summary></p>
+<ul>
+<li>Go to JuliaBox: https://www.juliabox.com/</li>
+<li>If you just want to solve the exercise for robust LP, try to adapt your problem <a href="https://github.com/JuliaOpt/juliaopt-notebooks/blob/master/notebooks/JuMP-ChebyshevCenter.ipynb">using this example as template</a></li>
+<li>Or explore the available worked <a href="https://github.com/JuliaOpt/juliaopt-notebooks/tree/master/notebooks">introductory notebooks</a>.</li>
+<li>Or if you want a more complete, but still accessible path, <a href="https://github.com/JuliaOpt/juliaopt-notebooks/blob/master/notebooks/Shuvomoy%20-%20Getting%20started%20with%20JuMP.ipynb">consider following this great intro to JuMP</a></li>
+</ul>
+<p></details></p>
+<h2 id="complement-to-the-exercises">Complement to the exercises</h2>
+<p><details> <summary> Complement to exercise 1. </summary></p>
+<p>Implement with this data:</p>
+<p><img src="fig/minimum_fuel_optimal_control_data.png" width="600" align=center></p>
+<p>Plot the actuator signal <span class="math inline">\(u(t)\)</span> as a function of <span class="math inline">\(t\)</span>. Source: <a href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook_extra_exercises.pdf">Additional exercises in convex optimization.</a></p>
+<p></details></p>
+<p><details> <summary> Complement to exercise 2. </summary></p>
+<p>Alternatively, you may implement the <em>Robust LP with interval coefficients.</em> Exercise 4.13.</p>
+<p></details></p>
+<p><details> <summary> Complement to exercise 3. </summary></p>
+<p>The problem can be reformulated as</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{maximize}\quad &amp; \gamma \\            
+\text{subject to}
+\quad &amp;p(t) - \gamma \geq 0, ~~ t \in \R \\
+\quad &amp;l_i \leq p(t_i) \leq u_i, ~~  i = 1,\ldots,m \,.
+\end{aligned}
+\end{equation}
+\]</span></p>
+<p>An SDP can be obtained by using the LMI characterization of nonnegative polynomials from Chapter 2. It results in:</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\text{maximize}\quad &amp; \gamma \\            
+\text{subject to}
+\quad &amp;x_1 - \gamma = Y_{11}, \\
+\quad &amp;x_i = \sum_{m+n=i+1} Y_{mn} \leq u_i, ~~  i = 2,\ldots, 2k+1 \\
+\quad &amp;l_i \leq \sum_i p(t_i) \leq u_i, ~~  i = 1,\ldots,m \\
+\quad &amp;Y \succeq 0 \,.
+\end{aligned}
+\end{equation}
+\]</span> in the optimization variables <span class="math inline">\(x \in \R^{2k+1}\)</span>, <span class="math inline">\(\gamma \in \R\)</span>, <span class="math inline">\(Y\in \S^{k+1}\)</span>.</p>
+<p>Make plots of <span class="math inline">\(p(t)\)</span> to verify your solution.</p>
+<p></details></p>
+</div>
+</div>
+</body>
+</html>
