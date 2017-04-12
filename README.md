@@ -1,27 +1,23 @@
-## Learning through problem-solving
-
-[Link to all content in HTML format](http://main.marcelo-forets.fr/ocrg/)
+## Links
 
 [Reading group webpage](https://project.inria.fr/readinggroupoc/)
 
-This will be a collection of notes and problem/solution files related to:
+[Link to all content of this repository in HTML format](http://main.marcelo-forets.fr/ocrg/)
 
-* Convex optimization
+## Learning through problem-solving
 
-* Optimal control
+This repository consists in a growing collection of slides, exercises and some code related to:
 
+* Mathematical optimization, in particular convex optimization at the level of [Boyd and Vandenberghe's book](http://stanford.edu/~boyd/cvxbook/)
+
+* Control theory, in particular optimal control, at the level of [Liberzon's book](http://liberzon.csl.illinois.edu/publications.html)
 
 ## How to contribute
 
-If you would like to contribute with an exercise please [send me an email](marcelo-forets.fr) and I will upload it here. Otherwise you can directly do it yourself, you just need a [github](https://github.com/) account (it is free). 
+If you would like to contribute with material please send a PR (pull request, through github), or otherwise [send me an email](marcelo-forets.fr), and I will upload it here. 
 
-To actually create new content, you can do it in any text editor and save the file in .md ([Markdown](https://en.wikipedia.org/wiki/Markdown)) format. There exist as well several programs specially conceived to formatting in Markdown. On a personal note, my favorite (for MacOS) is the open-source project [MacDown](macdown.uranusjr.com/). 
+For the content I have been using a text editor (Atom), and working in the .md fomat (for [Markdown](https://en.wikipedia.org/wiki/Markdown)). Another good Markdown-specialized editor (for MacOS) is the open-source project [MacDown](macdown.uranusjr.com/). If you enjoy working online, check also [stack edit](https://stackedit.io).
 
- 
-If you enjoy working online, check [stack edit](https://stackedit.io).
+## Code
 
-## References
- 
-* **[BVAdd]** Convex optimization. Boyd and Vandenberghe.
- 
-* **[BV]** [Additional exercises for Convex Optimization.](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook_extra_exercises.pdf) Boyd and Vandenberghe. Aug' 2016.
+Some of the exercises are written using [SageMath](http://www.sagemath.org/) free open source mathematics software. You can try it online at the [SageMath cell](http://sagecell.sagemath.org/); for the full-featured app check the [SageMath Cloud](http://sagecell.sagemath.org/).
