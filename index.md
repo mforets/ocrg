@@ -17,9 +17,9 @@ The standard notation for polynomials with coefficients on a field $\mathbb{K}$,
 
 These notes are mainly from the book by Boyd and Vandenberghe [BV].
 
-| Chapter   |    Material        |  
-|:---------:|:-----------------------------------------:|:-------|
-| Convex optimization problems, <br> Boyd Ch. 4 | [slides and exercises](./slides/convex_optimization_problems/slides_ch4_boyd.html) | 
+| Chapter   |    Material        |
+|:---------:|:-----------------------------------------:|
+| Convex optimization problems, <br> Boyd Ch. 4 | [slides and exercises](./slides/convex_optimization_problems/slides_ch4_boyd.html) |  
 
 ## References:
  
